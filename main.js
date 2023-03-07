@@ -50,6 +50,9 @@ function sleep(ms) {
 */
 var coordinatesGeo = []
 
+
+
+
 const tileLayer = new TileLayer({
   source: new OSM({
     url: "https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}",
@@ -151,13 +154,11 @@ const map = new Map({
   var coordinatesGeo = []
 
   async function onRequestHandler(){
-    
     while(true){
-      addCityFeature(longitud, latitud)
+      addCityFeature(longitud, latitud);
       try {
         const { longitude, latitude } = await getCurrentLocation(); 
-        const cityFeature = await addCityFeature(longitude, latitude); 
-        
+        addCityFeature(longitude, latitude);
       } catch (error) {
         console.error(error);
         response.writeHead(500);
@@ -177,8 +178,24 @@ const map = new Map({
   
 
   function addCityFeature(longitude, latitude) {
-    addFromLonLatFeature(longitude, latitude);
-    window.setInterval(addFromLonLatFeature, 5000);
+    const features = source.getFeatures();
+    const isSecondFeature = features.length === 1;
+    const geom = new Point(fromLonLat([longitude, latitude]));
+    const style = new Style({
+      image: new CircleStyle({
+        radius: 7,
+        fill: new Fill({
+          color: isSecondFeature ? 'orange' : 'red'
+        }),
+        stroke: new Stroke({
+          color: 'white',
+          width: 2
+        })
+      })
+    });
+    const feature = new Feature(geom);
+    feature.setStyle(style);
+    source.addFeature(feature);
   }
 
   const geolocation = new Geolocation({
@@ -198,10 +215,6 @@ const map = new Map({
 
     this.latitudGeo = geolocation.getPosition()[0]    
     this.longitudGeo = geolocation.getPosition()[1]
-
-    
-
-
   });
 
   geolocation.on('error', function (error) {

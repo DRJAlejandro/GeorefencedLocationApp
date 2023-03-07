@@ -14,6 +14,10 @@
       <div class="container">
         <form onsubmit="return sendData()">
           <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombresote" placeholder="Enter nombre">
+          </div>
+          <div class="form-group">
             <label for="longitud">Longitud:</label>
             <input type="text" class="form-control" id="longitud" placeholder="Enter longitud">
           </div>
@@ -35,13 +39,15 @@
   // Obtenga los valores de los campos de entrada
   var latitud = document.getElementById("latitud").value.trim();
   var longitud = document.getElementById("longitud").value.trim();
+  var nombre = document.getElementById("nombresote").value.trim();
 
   // Verifique si alguno de los campos de entrada está vacío o solo tiene un marcador de posición
-  if (latitud === "" || latitud === "Latitud" || longitud === "" || longitud === "Longitud") {
+  if (latitud === "" || latitud === "Latitud" || longitud === "" || longitud === "Longitud" || nombre === "Nombre" || nombre === "") {
     // Muestra una alerta y limpia los campos de entrada
     alert("Llena todos los campos");
     document.getElementById("latitud").value = "";
     document.getElementById("longitud").value = "";
+    document.getElementById("nombresote").value = "";
     return false; // Evita que se envíe el formulario
   }
 
@@ -55,9 +61,9 @@
   }
 
   // Verifique si los valores están fuera del rango permitido o no son números válidos
-  if (isNaN(parseFloat(latitud)) || isNaN(parseFloat(longitud)) || parseFloat(latitud) < 20.909
- || parseFloat(latitud) > 21.2217724223099 || parseFloat(longitud) < -101.8915394
- || parseFloat(longitud) > -101.1650987
+  if (isNaN(parseFloat(latitud)) || isNaN(parseFloat(longitud)) || parseFloat(latitud) < 20.92
+ || parseFloat(latitud) > 21.2 || parseFloat(longitud) < -101.88
+ || parseFloat(longitud) > -101.17
 ) {
     // Muestra una alerta y limpia los campos de entrada
     alert("Valor fuera del rango");
@@ -79,11 +85,15 @@ function sendData() {
   // Obtener los valores de los campos de entrada
   var latitud = document.getElementById("latitud").value;
   var longitud = document.getElementById("longitud").value;
+  var name = document.getElementById("nombresote").value;
+ 
+
 
   // Crear un objeto de formulario
   var form = document.createElement("form");
   form.method = "GET";
   form.action = "pizza.html";
+
 
   // Crear campos ocultos para los valores de los campos de entrada
   var latitudInput = document.createElement("input");
@@ -97,6 +107,12 @@ function sendData() {
   longitudInput.name = "longitud";
   longitudInput.value = longitud;
   form.appendChild(longitudInput);
+
+  var nombreInput = document.createElement("input");
+  nombreInput.type = "hidden";
+  nombreInput.name = "nombresote";
+  nombreInput.value = name;
+  form.appendChild(nombreInput);
 
   // Agregar el formulario al DOM y enviarlo
   document.body.appendChild(form);

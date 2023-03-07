@@ -9,7 +9,9 @@ html, body {
   top: 0;
   bottom: 0;
   width: 100%;
+  margin-top: 55px;
 }
+
 
 	      /* Add custom styles here */
         .header-img {
@@ -35,4 +37,15 @@ html, body {
           text-align: left;
           width: 100px;
           margin: 10px 0;
+        font-family: "Comic Sans MS", cursive, sans-serif;
         }
+
+        #patotas {
+          font-family: "Comic Sans MS", cursive, sans-serif;
+          font-size: 1.5em;
+          margin-top: 0.5em;
+          text-align: center;
+      }
+
+  
+        

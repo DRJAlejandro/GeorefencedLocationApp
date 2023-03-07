@@ -2,12 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
+    <title>Patotas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/css/bootstrap.min.css"
+      integrity="sha512-Z1QP+06ZV21ssRbGcS0j+LumrxwugLd+bDeoD8C3W1TyXkL4ZVshR65bS8GKfRWzuvPwGGgBRfK5P5o5I5X9vg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-    <div id="map"></div>
-    <script type="module" src="./main.js"></script>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-auto text-center" id="patotas">
+          <h1>Ves tu ubicacion ?</h1>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <div id="map"></div>
+          <script type="module" src="./main.js"></script>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const nombresote = urlParams.get("nombresote");
+      const greetingDiv = document.getElementById("patotas");
+      greetingDiv.textContent = "Ves tu ubicacion " + nombresote;
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.2/js/bootstrap.bundle.min.js"
+      integrity="sha512-C0QfnGwOvYcMmW8DM4HXq3ZmDjrBYaFKZptzNHMgjFlcJzNZ/LltyT2R+Yl/pJhMVj1rZeE9q3p+p+QUaPBBkw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>
