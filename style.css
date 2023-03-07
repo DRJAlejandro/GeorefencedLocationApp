@@ -10,3 +10,29 @@ html, body {
   bottom: 0;
   width: 100%;
 }
+
+	      /* Add custom styles here */
+        .header-img {
+          max-width: 100%;
+          height: auto;
+          display: block;
+          margin: auto;
+        }
+  
+        /* Center the form */
+        form {
+          text-align: center;
+        }
+  
+        /* Center the button */
+        button {
+          margin-top: 10px;
+        }
+  
+        /* Center the labels */
+        label {
+          display: inline-block;
+          text-align: left;
+          width: 100px;
+          margin: 10px 0;
+        }

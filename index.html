@@ -1,13 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/x-icon" href="https://openlayers.org/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Using OpenLayers with Vite</title>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script type="module" src="./main.js"></script>
-  </body>
+<html>
+<head>
+	<title>Input Example with Bootstrap and Custom CSS</title>
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	
+</head>
+<body>
+  <div class="container-fluid">
+    <img src="https://imgs.search.brave.com/JUM80TILAGngdmXLSIVkT_rYOw2mmZFWe84j61GU0Xo/rs:fit:487:245:1/g:ce/aHR0cDovL2ltYWdl/cy5hbGwtZnJlZS1k/b3dubG9hZC5jb20v/aW1hZ2VzL2dyYXBo/aWNsYXJnZS9zaW1w/bGVfd29ybGRfbWFw/c192ZWN0b3JfNTc4/Nzg2LmpwZw" alt="World Map" class="header-img">
+    <section>
+      <div class="container">
+        <form onsubmit="return sendData()">
+          <div class="form-group">
+            <label for="longitud">Longitud:</label>
+            <input type="text" class="form-control" id="longitud" placeholder="Enter longitud">
+          </div>
+          <div class="form-group">
+            <label for="latitud">Latitud:</label>
+            <input type="text" class="form-control" id="latitud" placeholder="Enter latitud">
+          </div>
+          <button type="submit" class="btn btn-primary">Dale</button>
+        </form>
+      </div>
+    </section>
+  </div>
+  <!-- Include Bootstrap JS (jQuery and Popper.js are required) -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    function validateInputs() {
+  // Obtenga los valores de los campos de entrada
+  var latitud = document.getElementById("latitud").value.trim();
+  var longitud = document.getElementById("longitud").value.trim();
+
+  // Verifique si alguno de los campos de entrada está vacío o solo tiene un marcador de posición
+  if (latitud === "" || latitud === "Latitud" || longitud === "" || longitud === "Longitud") {
+    // Muestra una alerta y limpia los campos de entrada
+    alert("Llena todos los campos");
+    document.getElementById("latitud").value = "";
+    document.getElementById("longitud").value = "";
+    return false; // Evita que se envíe el formulario
+  }
+
+  // Verifique si los campos de entrada tienen algún espacio
+  if (/\s/g.test(latitud) || /\s/g.test(longitud)) {
+    // Muestra una alerta y limpia los campos de entrada
+    alert("Los campos no deben contener espacios");
+    document.getElementById("latitud").value = "";
+    document.getElementById("longitud").value = "";
+    return false; // Evita que se envíe el formulario
+  }
+
+  // Verifique si los valores están fuera del rango permitido o no son números válidos
+  if (isNaN(parseFloat(latitud)) || isNaN(parseFloat(longitud)) || parseFloat(latitud) < 20.909
+ || parseFloat(latitud) > 21.2217724223099 || parseFloat(longitud) < -101.8915394
+ || parseFloat(longitud) > -101.1650987
+) {
+    // Muestra una alerta y limpia los campos de entrada
+    alert("Valor fuera del rango");
+    document.getElementById("latitud").value = "";
+    document.getElementById("longitud").value = "";
+    return false; // Evita que se envíe el formulario
+  }
+
+  // Si los valores están dentro del rango permitido, los campos de entrada no están vacíos y no tienen espacios, permita que se envíe el formulario
+  return true;
+}
+
+function sendData() {
+  // Validar los campos de entrada
+  if (!validateInputs()) {
+    return; // Evita que se envíe el formulario si la validación falla
+  }
+
+  // Obtener los valores de los campos de entrada
+  var latitud = document.getElementById("latitud").value;
+  var longitud = document.getElementById("longitud").value;
+
+  // Crear un objeto de formulario
+  var form = document.createElement("form");
+  form.method = "GET";
+  form.action = "pizza.html";
+
+  // Crear campos ocultos para los valores de los campos de entrada
+  var latitudInput = document.createElement("input");
+  latitudInput.type = "hidden";
+  latitudInput.name = "latitud";
+  latitudInput.value = latitud;
+  form.appendChild(latitudInput);
+
+  var longitudInput = document.createElement("input");
+  longitudInput.type = "hidden";
+  longitudInput.name = "longitud";
+  longitudInput.value = longitud;
+  form.appendChild(longitudInput);
+
+  // Agregar el formulario al DOM y enviarlo
+  document.body.appendChild(form);
+  form.submit();
+
+  // Prevenir que se envíe el formulario de forma convencional
+  event.preventDefault();
+
+  // Cargar pizza.html en la página actual
+  var pizzaPage = new XMLHttpRequest();
+  pizzaPage.open("GET", "pizza.html", true);
+  pizzaPage.onload = function() {
+    if (this.status == 200) {
+      document.documentElement.innerHTML = this.responseText;
+    }
+  };
+  pizzaPage.send();
+}
+
+  </script>
+</body>
 </html>
